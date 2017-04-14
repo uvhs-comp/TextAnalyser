@@ -1,0 +1,46 @@
+[file_prefs]
+final_new_line=true
+ensure_convert_new_lines=false
+strip_trailing_spaces=false
+replace_tabs=false
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=true
+detect_indent_width=false
+indent_mode=2
+
+[project]
+name=TextAnalyser
+base_path=/home/pi/Desktop/TextAnalyser
+description=
+file_patterns=
+
+[long line marker]
+long_line_behaviour=1
+long_line_column=72
+
+[files]
+current_page=0
+FILE_NAME_0=11124;Python;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDesktop%2FTextAnalyser%2F__init__.py;0;4
+FILE_NAME_1=2631;HTML;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDesktop%2FTextAnalyser%2Ftemplates%2Findex.html;0;4
+FILE_NAME_2=370;CSS;0;EUTF-8;1;1;0;%2Fhome%2Fpi%2FDesktop%2FTextAnalyser%2Fstatic%2Fcss%2Fmystyle.css;0;4
+FILE_NAME_3=0;Python;0;EUTF-8;2;1;0;%2Fhome%2Fpi%2FDesktop%2FTextAnalyser%2Fstatic%2Fdb%2Fdbreset.py;0;4
+FILE_NAME_4=552;HTML;0;EUTF-8;0;1;0;%2Fhome%2Fpi%2FDesktop%2FTextAnalyser%2Ftemplates%2Ftextshow.html;0;4
+
+[VTE]
+last_dir=/home/pi
+
+[build-menu]
+EX_00_LB=_Execute
+EX_00_CM=python3 "%f"
+EX_00_WD=
+PythonFT_00_LB=_Compile
+PythonFT_00_CM=python3 -m py_compile "%f"
+PythonFT_00_WD=
+PythonFT_01_LB=
+PythonFT_01_CM=
+PythonFT_01_WD=
+filetypes=Python;

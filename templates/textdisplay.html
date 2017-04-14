@@ -1,0 +1,82 @@
+{% extends 'header.html' %} {% block body %} {% with messages = get_flashed_messages() %} {% if messages %}
+<div class="alert alert-warning">
+    {% for message in messages %} {{ message }} {% endfor %}
+</div>
+{% endif %} {% endwith %} {% if upload %}
+<form method="POST" action="{{ url_for('save_text')}}" name="titleform">
+    <div class="page-header">
+        <div class="container">
+            <div class="row">
+                <textarea name='title' rows=1 cols=15 class="titleinput col-sm-7 col-sm-offset-1" type=text>{{ title }}</textarea> {% if ext %}
+                <textarea rows=1 cols=15 class="titleinput form-control col-sm-1" type=text readonly>{{ ext }}</textarea> {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="page-header">
+        <h1 style="font-size: 75px; color: #2b669a;"> {{ title }} </h1>
+        <span class="label label-primary">Owner: {{ owner }}</span>
+        <a class="btn btn-default" href="{{ url_for('download', texttitle=title)}}" target="_blank"> Download </a>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-10">
+            <p style="width:80%;font-size:15px;">{{ text }}</p>
+                    {% if upload %}
+                        <label>Category: </label>
+                        <input type="text" name="Category"></input>
+                        <input type=submit value=Save>
+                    {% else %}
+                        {% if user == owner %}
+                            <a class="btn btn-default inner" href="{{ url_for('share', texttitle=title)}}" >Share Text</a>
+                            <form action="{{ url_for('deletetext', texttitle = title) }}">
+                                <button class="btn btn-default inner" type=submit value="Delete Text">Delete Text</button>
+                            </form>
+                        {% endif %}
+                        <button class="btn btn-default inner" type="button" onclick="goBack()">Go Back</button>
+                        <script>
+                        function goBack() {
+                            window.history.back();
+                        }
+                        </script>
+                    {% endif %}
+
+                    </form>
+        </div>
+
+        <div class="col-md-2">
+            {% for key in texts %}
+                {% if upload %}
+                    <form action="{{ url_for('changeview', analysis=key) }}" method="POST">
+                    <button class="btn btn-success" type=submit style="margin:2px;">{{ key }}</button>
+                {% else %}
+                    <a href="{{ url_for('textdisplay', textTitle = title, analysis=key) }}" method="POST" class="btn btn-success" style="margin:2px;">{{ key }}</a><br>
+                {% endif %}
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+    <hr>
+    <h2> Text Statistics </h2>
+    <div class="row">
+        {% for key, fact in facts.items() %}
+            {% if key not in ['Words','Punctuation', 'Key Words'] %}
+                <h4>{{ key }}    <span class="label label-primary">{{ fact }}</span></h4>
+            {% endif %}
+        {% endfor %}
+
+        <h4> Keywords <span class="label label-primary">{{ keywords }}</span></h4>
+
+    </div>
+    <hr>
+    <h2> Text Graphs </h2>
+    <div class="row">
+        {% for key, fact in facts.items() %}
+            {% if key in ['Words','Punctuation'] %}
+                <embed type="image/sgv+xml" src={{fact|safe}} style="width:45%">
+                </embed>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends 'header.html' %} {% block body %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="alert alert-warning">
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<div class="row">
+    <div class="page-header">
+        <h1 style="font-size: 50px; color: #2b669a;"> {{ session.username }} </h1>
+        <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Account Settings
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="{{ url_for('changepassword') }}">Change Password</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ url_for('deleteaccount') }}">Delete Account</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <h2 style="text-align:left; width:90%;"> Owned Text Search Results: </h2>
+        <br>
+        {% for text in owned_texts %}
+            {% if text == False %}
+                <h3> No Texts Found </h3>
+            {% else %}
+                <div class="panel panel-default" style="width:90%; align:right;">
+                    <div class="panel-heading">
+                        <a href={{ url_for( 'textdisplay', textTitle=text.title, analysis="Regular" ) }} class="panel-title" style="text-decoration: none;">{{ text.title }}
+                    </div>
+
+                    <div class="panel-body">
+                        {{ text.body }}
+                	</div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <h2 style="text-align:left; width:90%;"> Shared Text Search Results: </h2>
+        <br>
+        {% for text in shared_texts %}
+            {% if text == False %}
+                <h3> No Texts Found </h3>
+            {% else %}
+                <div class="panel panel-default" style="width:90%; align:right;">
+                    <div class="panel-heading">
+                        <a href={{ url_for( 'textdisplay', textTitle=text.title, analysis="Regular" ) }} class="panel-title" style="text-decoration: none;">{{ text.title }}
+                    </div>
+
+                    <div class="panel-body">
+                        {{ text.body }}
+                	</div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <br>
+        <br>
+        </div>
+
+        <div class="col-md-2" style="padding-left:0px;padding-right:50px;">
+            <form name="search-title" method="POST" action="{{ url_for('search_titles', username=username) }}">
+
+                <h3 style="text-align:left;">Search by Title: </h3>
+                <input type="text" name="title">
+                <br>
+                <hr>
+                <button class="btn btn-success" type="submit"> Search </button>
+
+                <br>
+                <hr>
+            </form>
+
+            <form name="search-keywords" method="POST" action="{{ url_for('search_keywords', username=username) }}">
+
+                <h3 style="text-align:left;">Search Keyword: </h3>
+
+                <input type="text" name="keyword">
+                <br>
+                <hr>
+                <button class="btn btn-success" type="submit"> Search </button>
+
+                <br>
+                <hr>
+            </form>
+
+            <form name="search-category" methods="POST" action="{{ url_for('search_category', username=username) }}">
+                <h3 style="text-align:left;">Search Category: </h3>
+                <select name="category">
+                    {%  for category in categories %}
+                        <option value="{{ category }}"> {{ category }} </option>
+                    {% endfor %}
+                </select>
+                <br>
+                <hr>
+                <button class="btn btn-success" type="submit"> Search </button>
+                <br>
+                <hr>
+            </form>
+
+        </div>
+
+        <div class="col-md-2" style="padding-left:0px;padding-right:50px;">
+            <form name="search_features" method="POST" action="{{ url_for('search_values', username=username) }}">
+                <h3 style="text-align:left;"> Search by Feature: </h3>
+                <label> Reading Age Above: </label>
+                <input type="range" min="0" max="25" value="0" id="RAS"
+	                   step="0.5" oninput="outputUpdate(value, id)" name="RAS">
+                <output for="fader" id="RASO">0</output>
+
+                <label> Sentiment Above: </label>
+                <input type="range" min="-5" max="5" value="-5" id="SSA"
+	                   step="0.1" oninput="outputUpdate(value, id)" name="SSA">
+                <output for="fader" id="SSAO">-5</output>
+
+                <label> Sentiment Below: </label>
+                <input type="range" min="-5" max="5" value="5" id="SSB"
+	                   step="0.1" oninput="outputUpdate(value, id)" name="SSB">
+                <output for="fader" id="SSBO">5</output>
+
+                <label> Text Contains: </label>
+                <br>
+                <input type="checkbox" name="Alliteration">Alliteration</input>
+                <br>
+                <input type="checkbox" name="Antithesis">Antithesis</input>
+                <br>
+                <input type="checkbox" name="Juxtaposition">Juxtaposition</input>
+
+                <script>
+                function outputUpdate(val, output_id) {
+                    output_id = output_id.concat("O")
+                    output_id = "#".concat(output_id)
+                    document.querySelector(output_id).value = val;
+                }
+                </script>
+                <hr>
+                <button class="btn btn-success" type="submit"> Search </button>
+                <br>
+                <hr>
+            </form>
+        </div>
+    </div>
+    {% endblock %}

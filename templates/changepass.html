@@ -1,0 +1,28 @@
+{% extends 'header.html' %} {% block body %}
+
+<div class="container">
+
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="alert alert-warning">
+        {% for message in messages %} {{ message }} {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <form method="POST" action="{{ url_for('changepassword') }}">
+        <dl>
+            <dt><label for="oldpass">Current Password</label></dt>
+            <dd><input id="oldpass" name="oldpass" type="text" value=""></dd>
+        </dl>
+        <dl>
+            <dt><label for="newpass">New Password</label></dt>
+            <dd><input id="newpass" name="newpass" type="text" value=""></dd>
+        </dl>
+        <dl>
+            <dt><label for="connewpass">Confirm New Password</label></dt>
+            <dd><input id="connewpass" name="connewpass" type="text" value=""></dd>
+        </dl>
+        <input class="btn btn-default" type="submit" value="Login">
+    </form>
+</div>
+
+{% endblock %}

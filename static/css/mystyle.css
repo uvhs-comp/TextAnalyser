@@ -1,0 +1,55 @@
+.titleinput {
+	height:110px;
+	width:60%;
+	color:#2b669a;
+	font-size:75px;
+	text-align:center;
+	padding:0px;
+	resize:none;
+	display: inline-block;
+	box-sizing: border-box;
+}
+
+.form-control {
+	height:40px;
+	width:20%;
+	color:#2b669a;
+	font-size:7vw, 3vh;
+	text-align:center;
+	display: inline-block;
+}
+
+.file-name-dis {
+	height:34px;
+	width:80%;
+	color:#2b669a;
+	font-size:7vw, 3vh;
+	text-align:center;
+	display: inline-block;
+}
+
+.col-sm-1 {
+    color:#2b669a;
+	font-size:75px;
+	text-align:center;
+}
+
+mark {
+	background-color: #F3F315;
+}
+
+.ta-but {
+    display:inline-block;
+    position:relative;
+}
+
+.but {
+	position:absolute;
+	bottom:25px;
+	right:35px;
+}
+
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}

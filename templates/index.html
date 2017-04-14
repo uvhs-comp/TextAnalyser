@@ -1,0 +1,58 @@
+{% extends 'header.html' %}
+{% block body %}
+<body>
+	<div class="page-header">
+		<img src="{{ url_for('static', filename='images/textanalyser_header3.png') }} " style="width:100%;"></img>
+	</div>
+
+	{% with messages = get_flashed_messages() %} {% if messages %}
+	<div class="alert alert-warning">
+		{% for message in messages %} {{ message }} {% endfor %}
+	</div>
+	{% endif %} {% endwith %}
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">
+				<form method="POST" action="{{ url_for('upload_file') }}" enctype=multipart/form-data>
+					<div class="input-group">
+						<label class="input-group-btn">
+							<span class="btn btn-primary">
+								Browse&hellip; <input type="file" id="fileInput" style="display: none;" name="file" multiple>
+					    	</span>
+						</label>
+						<input type="text" id="filename-dis" class="file-name-dis input-group-addon" readonly>
+						<input class="btn btn-success" type=submit value=Upload>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-md-4 ta-but">
+				<form method="POST" action="{{ url_for('raw_text_upload') }}" enctype=multipart/form-data>
+					<textarea cols="57%" rows="10%" name="raw_text" placeholder="Type or paste your text here..." style="resize:vertical;"></textarea>
+					<input class="btn btn-success but" type=submit value=Upload>
+				</form>
+			</div>
+
+			<div class="col-md-4">
+				<div class="input-group">
+					<label class="input-group-btn">
+						<button class="btn btn-primary" onclick="paste_url()">
+							Paste&hellip;
+						</button>
+					</label>
+					<form method="POST" action="{{ url_for('webtext', analysis="Regular") }}" enctype=multipart/form-data>
+						<input id="url-dis" type="text" name="url" class="file-name-dis input-group-addon" placeholder="Paste URL here...">
+						<input class="btn btn-success" type=submit value=Go...>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+</body>
+
+</html>
+{% endblock %}

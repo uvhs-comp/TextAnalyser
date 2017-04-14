@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Text Analyser</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ url_for ('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for ('static', filename='css/mystyle.css') }}" rel="stylesheet">
+</head>
+
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a style="color: #2b669a;" class="navbar-brand" href="{{ url_for('index') }}">Text Analyser</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                <ul class="nav navbar-nav">
+                    <li><a data-toggle="modal" data-target="#AboutModal">About</a></li>
+
+                    <div class="modal fade" tabindex="-1" role="dialog" id="AboutModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">About</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container">
+                                        <h3>
+                      A text Analyser made using Python 3 and <br>
+                      Flask. Simple to use, just insert the url <br>
+                      or directory of the file that you want to <br>
+                      be analysed and press enter. Or if you'd <br>
+                      prefer you can copy the text in to the box <br>
+                      box for the same effect. The analyser return <br>
+                      a wide array of results including uses of <br>
+                      punctuation, words and sentences, and other <br>
+                      features such as reading age and alliteration.<br>
+                    </h3>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <!-- /.modal -->
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    {% if session.logged_in %}
+                        <li><a data-toggle="modal" data-target="#notifs">
+                            <span class="glyphicon glyphicon-bell"></span>
+                        </a></li>
+                        <div class="modal fade" id="notifs">
+                            <div class="modal-dialog modal-sm">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Notifications</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container">
+                                            {% for notif in session.notifs %}
+                                                <p> {{ notif }} <p>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <li>
+                            <a href="{{ url_for('profile', username=session.username) }}">{{ session.username }}</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('login_page') }}">Login</a>
+                        </li>
+
+                        <li>
+                            <a href="{{ url_for('register_page') }}">Sign Up</a>
+                        </li>
+                    {% endif %}
+
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+</header>
+
+<body>
+    <div class="border-row" style="width:100%; margin-bottom: 15px;"></div>
+    <div class="container-fluid" align="center" style="min-height:100%">
+        {% block body %}{% endblock %}
+    </div>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/myjs.js') }}"></script>
+</body>
+
+</html>
